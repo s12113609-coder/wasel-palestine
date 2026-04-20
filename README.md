@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Wasel Palestine 🗺️
 ## Smart Mobility & Checkpoint Intelligence Platform
 ### Advanced Software Engineering – Spring 2026 | Dr. Amjad AbuHassan
