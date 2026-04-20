@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Wasel Palestine 🗺️
 ## Smart Mobility & Checkpoint Intelligence Platform
 ### Advanced Software Engineering – Spring 2026 | Dr. Amjad AbuHassan
@@ -350,3 +351,7 @@ git push origin feature/incident-management
 ---
 
 *Wasel Palestine – Advanced Software Engineering Project, Spring 2026*
+=======
+# wasel-palestine
+Smart Mobility &amp; Checkpoint Intelligence Platform API using Node.js, Express, PostgreSQL, and Docker
+>>>>>>> b9995ca8de490b3b21d0f13badb48337e4ccf7e1
