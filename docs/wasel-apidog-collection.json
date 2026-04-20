@@ -1,0 +1,239 @@
+{
+  "info": {
+    "name": "Wasel Palestine API v1",
+    "description": "Smart Mobility & Checkpoint Intelligence Platform",
+    "version": "1.0.0",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000/api/v1", "type": "string" },
+    { "key": "accessToken", "value": "", "type": "string" },
+    { "key": "refreshToken", "value": "", "type": "string" }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [{ "key": "token", "value": "{{accessToken}}", "type": "string" }]
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/auth/register",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"newuser\",\n  \"email\": \"newuser@wasel.ps\",\n  \"password\": \"User@12345\"\n}"
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": { "exec": [
+              "pm.test('Status 201', () => pm.response.to.have.status(201));",
+              "const json = pm.response.json();",
+              "pm.collectionVariables.set('accessToken', json.accessToken);",
+              "pm.collectionVariables.set('refreshToken', json.refreshToken);"
+            ]}
+          }]
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/auth/login",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@wasel.ps\",\n  \"password\": \"Admin@2026\"\n}"
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": { "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));",
+              "const json = pm.response.json();",
+              "pm.collectionVariables.set('accessToken', json.accessToken);",
+              "pm.collectionVariables.set('refreshToken', json.refreshToken);"
+            ]}
+          }]
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/auth/refresh",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}" }
+          }
+        },
+        {
+          "name": "Get Me",
+          "request": { "method": "GET", "url": "{{baseUrl}}/auth/me", "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}" }] } }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/auth/logout",
+            "body": { "mode": "raw", "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Incidents",
+      "item": [
+        {
+          "name": "List Incidents",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/incidents?status=active&severity=high&page=1&limit=10", "query": [
+            { "key": "status", "value": "active" },
+            { "key": "severity", "value": "high" },
+            { "key": "page", "value": "1" },
+            { "key": "limit", "value": "10" }
+          ]}}
+        },
+        {
+          "name": "Get Incident by ID",
+          "request": { "method": "GET", "url": "{{baseUrl}}/incidents/{{incidentId}}" }
+        },
+        {
+          "name": "Create Incident",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/incidents",
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}" }] },
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"Road closure at checkpoint\",\n  \"description\": \"Military operation causing full road closure\",\n  \"type\": \"closure\",\n  \"severity\": \"high\",\n  \"latitude\": 31.865,\n  \"longitude\": 35.214,\n  \"region\": \"Ramallah\"\n}" }
+          },
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status 201', () => pm.response.to.have.status(201));",
+            "pm.collectionVariables.set('incidentId', pm.response.json().id);"
+          ]}}]
+        },
+        {
+          "name": "Update Incident Status",
+          "request": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/incidents/{{incidentId}}",
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}" }] },
+            "body": { "mode": "raw", "raw": "{\n  \"status\": \"verified\",\n  \"notes\": \"Verified by field moderator\"\n}" }
+          }
+        },
+        {
+          "name": "Get Audit Log",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/incidents/{{incidentId}}/audit",
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}" }] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Checkpoints",
+      "item": [
+        { "name": "List Checkpoints", "request": { "method": "GET", "url": "{{baseUrl}}/checkpoints?region=Ramallah" }},
+        { "name": "Get Checkpoint", "request": { "method": "GET", "url": "{{baseUrl}}/checkpoints/{{checkpointId}}" }},
+        { "name": "Get Status History", "request": { "method": "GET", "url": "{{baseUrl}}/checkpoints/{{checkpointId}}/history" }},
+        {
+          "name": "Update Checkpoint Status",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/checkpoints/{{checkpointId}}/status",
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}" }] },
+            "body": { "mode": "raw", "raw": "{\n  \"status\": \"closed\",\n  \"notes\": \"Military operation, closed until further notice\"\n}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reports (Crowdsourced)",
+      "item": [
+        { "name": "List Reports", "request": { "method": "GET", "url": "{{baseUrl}}/reports?status=pending&page=1" }},
+        {
+          "name": "Submit Report",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/reports",
+            "body": { "mode": "raw", "raw": "{\n  \"latitude\": 31.865,\n  \"longitude\": 35.214,\n  \"category\": \"delay\",\n  \"description\": \"Long queue at checkpoint, waiting time around 45 minutes\"\n}" }
+          },
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Created or duplicate', () => { const s = pm.response.status; pm.expect([201, 200]).to.include(s); });",
+            "if (pm.response.status === 201) pm.collectionVariables.set('reportId', pm.response.json().id);"
+          ]}}]
+        },
+        {
+          "name": "Vote on Report",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/reports/{{reportId}}/vote",
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}" }] },
+            "body": { "mode": "raw", "raw": "{\n  \"vote\": 1\n}" }
+          }
+        },
+        {
+          "name": "Moderate Report",
+          "request": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/reports/{{reportId}}/moderate",
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}" }] },
+            "body": { "mode": "raw", "raw": "{\n  \"status\": \"verified\",\n  \"moderation_note\": \"Confirmed by moderator\"\n}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Routes",
+      "item": [
+        {
+          "name": "Estimate Route",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/routes/estimate?from_lat=31.865&from_lng=35.214&to_lat=32.220&to_lng=35.258&avoid_checkpoints=true",
+              "query": [
+                { "key": "from_lat", "value": "31.865" },
+                { "key": "from_lng", "value": "35.214" },
+                { "key": "to_lat", "value": "32.220" },
+                { "key": "to_lng", "value": "35.258" },
+                { "key": "avoid_checkpoints", "value": "true" }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Alerts",
+      "item": [
+        {
+          "name": "Subscribe to Alerts",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/alerts/subscriptions",
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}" }] },
+            "body": { "mode": "raw", "raw": "{\n  \"region\": \"Ramallah\",\n  \"radius_km\": 15,\n  \"categories\": [\"closure\", \"military_operation\"]\n}" }
+          }
+        },
+        {
+          "name": "List My Subscriptions",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/alerts/subscriptions",
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}" }] }
+          }
+        },
+        {
+          "name": "List My Alerts",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/alerts?unread_only=true",
+            "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{accessToken}}" }] }
+          }
+        }
+      ]
+    }
+  ]
+}
