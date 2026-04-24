@@ -349,9 +349,3 @@ git push origin feature/incident-management
 - `chore: description` – maintenance
 
 ---
-
-*Wasel Palestine – Advanced Software Engineering Project, Spring 2026*
-=======
-# wasel-palestine
-Smart Mobility &amp; Checkpoint Intelligence Platform API using Node.js, Express, PostgreSQL, and Docker
->>>>>>> b9995ca8de490b3b21d0f13badb48337e4ccf7e1

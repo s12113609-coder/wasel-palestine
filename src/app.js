@@ -56,6 +56,7 @@ app.use('/api/v1/checkpoints', require('./routes/checkpoints'));
 app.use('/api/v1/reports', require('./routes/reports'));
 app.use('/api/v1/routes', require('./routes/routes'));
 app.use('/api/v1/alerts', require('./routes/alerts'));
+app.use('/api/v1/stats', require('./routes/stats'));
 
 // ── 404 & Error Handler ───────────────────────────────────────────
 app.use((err, req, res, next) => {
