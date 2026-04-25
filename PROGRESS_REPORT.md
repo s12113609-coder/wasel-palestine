@@ -62,18 +62,21 @@
 | 1 | JWT Authentication (access + refresh tokens) | الين ياسين | ✅ Complete |
 | 2 | Checkpoint Management + Status History | ابراهيم عوض | ✅ Complete |
 | 3 | Incident Management + Audit Log | ابراهيم عوض | ✅ Complete |
-| 4 | Crowdsourced Reports + Duplicate Detection | منار عيد | ✅ Complete |
-| 5 | Community Voting + Confidence Scoring | منار عيد | ✅ Complete |
-| 6 | Moderation Workflow + Audit Log | منار عيد | ✅ Complete |
-| 7 | Route Estimation + ORS Integration | يقين بزور | ✅ Complete |
-| 8 | OpenWeatherMap Integration | يقين بزور | ✅ Complete |
-| 9 | Alert Subscriptions + Auto-trigger | يقين بزور | ✅ Complete |
-| 10 | Redis Caching | الين ياسين | ✅ Complete |
-| 11 | Knex.js ORM (Stats endpoints) | يقين بزور | ✅ Complete |
-| 12 | Docker Compose Deployment | الين ياسين | ✅ Complete |
-| 13 | Rate Limiting + Security | الين ياسين | ✅ Complete |
-| 14 | k6 Performance Testing (5 scenarios) | الين ياسين | ✅ Complete |
-| 15 | GitHub Wiki + Documentation | الين ياسين | ✅ Complete |
+| 4 | Database Schema Design (ERD, 10 tables) | ابراهيم عوض | ✅ Complete |
+| 5 | Database Migrations + Seed Scripts | ابراهيم عوض | ✅ Complete |
+| 6 | Database Indexes + Query Optimization | ابراهيم عوض | ✅ Complete |
+| 7 | Crowdsourced Reports + Duplicate Detection | منار عيد | ✅ Complete |
+| 8 | Community Voting + Confidence Scoring | منار عيد | ✅ Complete |
+| 9 | Moderation Workflow + Audit Log | منار عيد | ✅ Complete |
+| 10 | Route Estimation + ORS Integration | يقين بزور | ✅ Complete |
+| 11 | OpenWeatherMap Integration | يقين بزور | ✅ Complete |
+| 12 | Alert Subscriptions + Auto-trigger | يقين بزور | ✅ Complete |
+| 13 | Redis Caching | الين ياسين | ✅ Complete |
+| 14 | Knex.js ORM (Stats endpoints) | الين ياسين | ✅ Complete |
+| 15 | Docker Compose Deployment | الين ياسين | ✅ Complete |
+| 16 | Rate Limiting + Security | الين ياسين | ✅ Complete |
+| 17 | k6 Performance Testing (5 scenarios) | الين ياسين | ✅ Complete |
+| 18 | GitHub Wiki + Documentation | الين ياسين | ✅ Complete |
 
 ---
 

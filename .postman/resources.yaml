@@ -1,0 +1,7 @@
+# Use this workspace to collaborate
+workspace:
+  id: de2c8ee3-10a0-4d01-817b-bfdf53abeb32
+
+localResources:
+  collections:
+    - ..\docs\wasel-apidog-collection.json
