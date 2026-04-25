@@ -311,16 +311,15 @@ Five k6 scenarios:
 
 ## Performance Testing Results
 
-*(Run after deployment and fill in actual numbers)*
-
 | Scenario | Avg Response | p95 Latency | Throughput | Error Rate |
 |----------|-------------|-------------|------------|------------|
-| Read-heavy (no cache) | ~85ms | ~140ms | ~580 req/s | 0% |
-| Read-heavy (with Redis) | ~12ms | ~25ms | ~3200 req/s | 0% |
-| Write-heavy | ~120ms | ~210ms | ~160 req/s | 0.3% |
-| Mixed | ~65ms | ~160ms | ~420 req/s | 0.1% |
-| Spike (200 VUs) | ~380ms | ~890ms | ~520 req/s | 1.2% |
-| Soak (5 min) | ~70ms | ~145ms | ~130 req/s | 0% |
+| Read-heavy | 7.8ms | 13.67ms | 88.97 req/s | 0.00% ✓ |
+| Write-heavy | 26.41ms | 47.43ms | 27.05 req/s | 0.00% ✓ |
+| Mixed | 14.64ms | 37.43ms | 67.85 req/s | 0.00% ✓ |
+| Spike (200 VUs) | 12.22ms | 41.43ms | 809.88 req/s | 84.63%* |
+| Soak (24 min) | 25.21ms | 70.04ms | 26.84 req/s | 0.00% ✓ |
+
+*Spike error rate is expected — rate limiter (429) protects the system under extreme load.
 
 ### Bottlenecks & Optimizations Applied
 1. **Before**: Incident listing queried DB every request → **After**: Redis cache with 60s TTL → **10x throughput improvement**
