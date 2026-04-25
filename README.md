@@ -299,13 +299,13 @@ Five k6 scenarios:
 
 | Scenario | VUs | Duration | Purpose |
 |----------|-----|----------|---------|
-| Read-heavy | 50 | 1 min | Simulate dashboard users |
-| Write-heavy | 20 | 1 min | Simulate report submission burst |
-| Mixed | 0→30→0 | 2 min | Realistic combined traffic |
-| Spike | 5→200→5 | 30 sec | Sudden traffic surge |
-| Soak | 10 | 5 min | Sustained load / memory leaks |
+| Read-heavy | 50→100→0 | 2 min | Simulate dashboard users |
+| Write-heavy | 20→50→0 | 2 min | Simulate report submission burst |
+| Mixed | 30 readers + 15 writers | 2 min | Realistic combined traffic |
+| Spike | 5→200→5 | 90 sec | Sudden traffic surge |
+| Soak | 30 | 24 min | Sustained load / memory leaks |
 
-**Thresholds**: p95 < 500ms, p99 < 1000ms, error rate < 5%
+**Thresholds**: Read p95<500ms · Write p95<1000ms · Mixed p95<800ms · Spike p95<2000ms · Soak p95<600ms
 
 ---
 
